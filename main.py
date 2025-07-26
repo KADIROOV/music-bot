@@ -3,11 +3,9 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, Messa
 from yt_dlp import YoutubeDL
 import os
 
-# /start komandasi
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🎧 Salom! Qoshiq nomini yuboring, men sizga MP3 formatda olib beraman.")
 
-# Qoshiq nomi yuborilganda
 async def get_music(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.message.text
     await update.message.reply_text("🔍 Qidirilyapti...")
@@ -29,7 +27,6 @@ async def get_music(update: Update, context: ContextTypes.DEFAULT_TYPE):
             filename = ydl.prepare_filename(info['entries'][0])
             mp3_file = filename.replace(".webm", ".mp3").replace(".m4a", ".mp3")
 
-        # Audio faylni yuborish
         with open(mp3_file, 'rb') as audio:
             await update.message.reply_audio(audio, title=info['entries'][0]['title'])
 
@@ -38,7 +35,6 @@ async def get_music(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f"❌ Xatolik: {e}")
 
-# Botni ishga tushurish
 if __name__ == '__main__':
     app = ApplicationBuilder().token("8306771778:AAG5yK3F8CKFr556hGGiilpoG9HgRYVJZfY").build()
 
